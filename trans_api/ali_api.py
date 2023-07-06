@@ -36,16 +36,18 @@ class ali_translator():
         translation = resp.body.data.__dict__['translated']
 
         src_and_dst = []
-        src_and_dst.append("src: " + text)
-        src_and_dst.append("dst: " + translation)
+        text = text.splitlines()
+        translation = translation.splitlines()
+        for index in range(0, len(text):
+            src_and_dst.append("src: " + text[index] + "\n" + \
+                               "dst: " + translation[index])
 
-        output_text = '\n'.join(src_and_dst)
 
         if write_log:
             with open(log_file, 'a') as f:
-                f.write(output_text)
+                f.write("\n".join(src_and_dst))
                 f.close
         
-        return output_text
+        return src_and_dst
 
 

@@ -50,7 +50,7 @@ class bd_translator():
 
         if write_log :
             with open(log_file, 'a') as f:
-                f.write("\n".join(content))
+                f.write("\n".join(src_and_dst))
                 f.close
 
         # restore response
