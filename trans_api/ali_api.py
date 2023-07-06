@@ -38,7 +38,7 @@ class ali_translator():
         src_and_dst = []
         text = text.splitlines()
         translation = translation.splitlines()
-        for index in range(0, len(text):
+        for index in range(0, len(text)):
             src_and_dst.append("src: " + text[index] + "\n" + \
                                "dst: " + translation[index])
 
