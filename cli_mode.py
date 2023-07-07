@@ -6,7 +6,7 @@ import keyboard
 import os
 
 bd_appid  = os.getenv('BD_APPID')
-bd_appkey = os.getenv('CD_APPID_KEY')
+bd_appkey = os.getenv('BD_APPID_KEY')
 ali_keyid = os.getenv('ALI_KEYID') 
 ali_keyid_secret = os.getenv('ALI_KEYID_SECRET') 
 
