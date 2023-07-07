@@ -39,7 +39,7 @@ class snipper():
         monitor_specs = win32api.EnumDisplayMonitors(None,None) 
         self.monitor_w = monitor_specs[0][2][2]
         self.monitor_h = monitor_specs[0][2][3]
-        if self.mode == 'mode':
+        if self.mode == 'window':
             self.get_window()
         elif self.mode == 'block':
             self.get_block()
@@ -52,8 +52,15 @@ class snipper():
             image in opencv
         """
         # why -16 ? https://www.cnblogs.com/octoberkey/p/14917087.html
-        w = self.snip_pos[2] - self.snip_pos[0] - 16 
-        h = self.snip_pos[3] - self.snip_pos[1] - 16 
+        if self.mode == 'window':
+            w = self.snip_pos[2] - self.snip_pos[0] - 16 
+            h = self.snip_pos[3] - self.snip_pos[1] - 16 
+            sp = (self.snip_pos[0]+8, self.snip_pos[1]+8)
+        elif self.mode == 'block':
+            w = self.snip_pos[2] - self.snip_pos[0]  
+            h = self.snip_pos[3] - self.snip_pos[1] 
+            sp = (self.snip_pos[0], self.snip_pos[1])
+
         hwnDC = win32gui.GetWindowDC(0)
         # mfc = Miscrosoft Foundation Classes
         mfcDC = win32ui.CreateDCFromHandle(hwnDC)
@@ -61,11 +68,13 @@ class snipper():
         saveBitMap = win32ui.CreateBitmap()
         saveBitMap.CreateCompatibleBitmap(mfcDC, w, h)
         saveDC.SelectObject(saveBitMap)
-        saveDC.BitBlt((0,0), (w, h), mfcDC, (self.snip_pos[0]+8, self.snip_pos[1]+8), win32con.SRCCOPY)
+        saveDC.BitBlt((0,0), (w, h), mfcDC, sp, win32con.SRCCOPY)
         signedIntsArray = saveBitMap.GetBitmapBits(True)
         im_opencv = np.frombuffer(signedIntsArray, dtype = 'uint8')
         im_opencv.shape = (h, w, 4)
         im = cv2.cvtColor(im_opencv, cv2.COLOR_RGBA2RGB)
+
+        cv2.imwrite("snip.png", im)
 
         return im
 
