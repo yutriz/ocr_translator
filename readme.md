@@ -1,6 +1,6 @@
-cli_mode
-	works well in simple situations 
+cli
+    works well in simple situations 
 
 TODO:
-	ocr improvement 
-	display translation over origin text block 
+    ocr improvement 
+    display translation over origin text block 

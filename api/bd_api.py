@@ -8,9 +8,11 @@ class bd_translator():
     def __init__(self, from_lang='jp', to_lang='zh', \
                  # Set your own appid/appkey.
                 bd_appid = 'appid', \
-                bd_appkey = 'appkey'
+                bd_appkey = 'appkey', \
+                write_log = False
                 ):
         
+        self.write_log = write_log
         self.appid = bd_appid
         self.appkey = bd_appkey 
 
@@ -26,8 +28,7 @@ class bd_translator():
     def make_md5(self, text, encoding='utf-8'):
         return md5(text.encode(encoding)).hexdigest()
     
-    def query(self, query_text, write_log=False, 
-              log_file='D:\.bd_trans_log.txt'):
+    def query(self, query_text, log_file='D:\.bd_trans_log.txt'):
         """
         output: list
         """
@@ -48,7 +49,7 @@ class bd_translator():
                         + "dst: " + result_line['dst']
             src_and_dst.append(content)
 
-        if write_log :
+        if self.write_log :
             with open(log_file, 'a') as f:
                 f.write("\n".join(src_and_dst))
                 f.close
